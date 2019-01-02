@@ -85,7 +85,7 @@ sharpe = rolling_sharpe(daily_ret, 252)
 
 sharpe = sharpe.dropna()
 
-print (sharpe.head())
+print (sharpe.tail())
 
 
 ########################################################################
