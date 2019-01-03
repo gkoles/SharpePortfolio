@@ -43,6 +43,11 @@ def readFinanceData(ticker, start, end):
 
     return close
 
+
+def quit_figure(event):
+    if event.key == ' ':
+        plt.close(event.canvas.figure)
+
 ########################################################################
 # FINANCIAL DATA BELOW
 ########################################################################
@@ -85,6 +90,13 @@ sharpe = rolling_sharpe(daily_ret, 252)
 
 sharpe = sharpe.dropna()
 
+########################################################################
+# MAXLINE BELOW
+########################################################################
+
+sharpe['MAX'] = sharpe.max(axis = 1)
+sharpe['BEST_CHOICE'] = sharpe.idxmax(axis = 1)
+
 print (sharpe.tail())
 
 
@@ -94,7 +106,7 @@ print (sharpe.tail())
 
 fig, ax = plt.subplots(figsize=(20, 10))
 
-sharpe['TLT'].plot(style='-', lw=3, label='TLT')\
+sharpe['TLT'].plot(style='-', lw=3, color='orange', label='TLT')\
         .axhline(y = 0, color = "black", lw = 3)
 
 sharpe['GLD'].plot(style='-', lw=3, color='indianred', label='GLD')\
@@ -103,8 +115,16 @@ sharpe['GLD'].plot(style='-', lw=3, color='indianred', label='GLD')\
 sharpe['SPY'].plot(style='-', lw=3, color='blue', label='SPY')\
         .axhline(y = 0, color = "black", lw = 3)
 
+# Doesn't really make sense
+# sharpe['MAX'].plot(style=':', lw=5, color='yellow', label='MAX')\
+#         .axhline(y = 0, color = "black", lw = 3)
+
 plt.ylabel('Sharpe ratio')
 plt.legend(loc='best')
 plt.title('Rolling Sharpe ratio (12-month)')
 fig.tight_layout()
+
+#close the program with 'q'
+cid = plt.gcf().canvas.mpl_connect('key_press_event', quit_figure)
+
 plt.show()
