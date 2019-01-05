@@ -78,6 +78,7 @@ aggregated_df.index = pd.to_datetime(aggregated_df.index)
 aggregated_df.columns = ['SPY', 'GLD', 'TLT', 'SHY']
 aggregated_df = aggregated_df.dropna()
 
+# only take the last 5 years' data
 last_5 = aggregated_df[start_date:]
 
 ########################################################################
@@ -94,7 +95,11 @@ sharpe = sharpe.dropna()
 # MAXLINE BELOW
 ########################################################################
 
+# select max value from each row
 sharpe['MAX'] = sharpe.max(axis = 1)
+
+# select instrument name (column name) for the max value - this is what you should hold your money in
+# (not considering the minimum holding period)
 sharpe['BEST_CHOICE'] = sharpe.idxmax(axis = 1)
 
 print (sharpe.tail())
@@ -115,7 +120,7 @@ sharpe['GLD'].plot(style='-', lw=3, color='indianred', label='GLD')\
 sharpe['SPY'].plot(style='-', lw=3, color='blue', label='SPY')\
         .axhline(y = 0, color = "black", lw = 3)
 
-# Doesn't really make sense
+# Doesn't really make sense but works
 # sharpe['MAX'].plot(style=':', lw=5, color='yellow', label='MAX')\
 #         .axhline(y = 0, color = "black", lw = 3)
 
