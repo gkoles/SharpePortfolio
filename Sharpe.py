@@ -49,7 +49,7 @@ def quit_figure(event):
         plt.close(event.canvas.figure)
 
 ########################################################################
-# FINANCIAL DATA BELOW
+# FINANCIAL DATA BELOW - BLABLA
 ########################################################################
 
 start_date = (datetime.date.today() - datetime.timedelta(days=5*365))
